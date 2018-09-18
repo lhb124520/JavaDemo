@@ -3,21 +3,21 @@ package com.demo.test;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Jedis;
 
 public class JedisDemo {
 	public static void main(String[] args) {
 		// 连接本地的 Redis 服务
 		@SuppressWarnings("resource")
-		Jedis jedis = new Jedis("localhost");
+		Jedis jedis = new Jedis("127.0.0.1");
 		System.out.println("连接成功");
 		// 查看服务是否运行
 		System.out.println("服务正在运行: " + jedis.ping());
 		StringTest(jedis);
 		ListTest(jedis);
 		KeysTest(jedis);
-
+		JedisPool();
 	}
 
 	/**
@@ -57,6 +57,24 @@ public class JedisDemo {
 		while (it.hasNext()) {
 			String key = it.next();
 			System.out.println(key);
+		}
+	}
+
+	/**
+	 * 测试JedisPool连接池
+	 */
+	public static void JedisPool() {
+		System.out.println("-----------测试JedisPool连接池------------------");
+		JedisPool jedisPool = JedisUtil.getJedisPoolInstance();		
+		Jedis jedis2 = null;
+		try {
+          jedis2=jedisPool.getResource();
+          jedis2.set("k1", "keys value");
+          System.out.println("redis 存储的字符串为: " + jedis2.get("k1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JedisUtil.release(jedisPool, jedis2);
 		}
 	}
 }

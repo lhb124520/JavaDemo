@@ -10,6 +10,7 @@ public class UserInfo {
 
 	public UserInfo(String userName, String passWord) {
 		super();
+		java.util.concurrent.Executor executor;
 		UserName = userName;
 		PassWord = passWord;
 	}

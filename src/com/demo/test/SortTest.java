@@ -79,7 +79,23 @@ public class SortTest {
 		// 6, 对key右边的数快排
 		quickSort(array, i + 1, high);
 	}
-
+	/**
+	 * 选择排序
+	 */
+	public static void bubbleSort(int array[]){
+		int len=array.length;
+	    for (int i=0 ; i<len-1 ; i++){
+	        for(int j=0 ; j<len-1-i ; j++){
+	            if(array[j]>array[j+1]){
+	                int temp = array[j];
+	                array[j] = array[j+1];
+	                array[j+1] = temp;
+	            }
+	        }
+	    }
+	    
+	}
+	 
 	public static void main(String[] args) {
 		int[] array = { 77, 29, 28, 36, 33, 25, 10 };
 		SortTest bobSort = new SortTest(array);
@@ -98,6 +114,16 @@ public class SortTest {
 		quickSort(array1,0,array1.length-1);
 		System.out.println("快速排序后的数据为：");
 		bobSort.display(array1);
+		
+		int[] array2 = { 78, 28, 26, 36, 33, 25, 11 };
+		SortTest bobSort2 = new SortTest(array2);
+		System.out.println("选择排序前的数据为：");
+		bobSort2.display(array2);
+		
+		bubbleSort(array2);		
+		
+		System.out.println("选择排序后的数据为：");
+		bobSort2.display(array2);
 	}
 
 }
